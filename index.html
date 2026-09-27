@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affirm &amp; Become • Daily Affirmations</title>
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<div class="splash" id="splash">
+  <div class="splash-heart">❤️</div>
+  <h1>Affirm &amp; Become</h1>
+  <div class="splash-sub">Affirm • Heal • Build • Become</div>
+  <div class="splash-preview"><p>“I love and accept myself as I am today.”</p></div>
+  <div class="splash-tap">💕 Tap anywhere to begin 💕</div>
+</div>
+
+<main class="app">
+  <header>
+    <div class="app-icon">❤️</div>
+    <h1 class="app-title">Affirm &amp; Become</h1>
+    <p class="app-subtitle">Affirm • Heal • Build • Become</p>
+  </header>
+
+  <section class="section">
+    <div class="section-title">Choose Your Focus</div>
+    <div class="category-strip" id="categoryStrip"></div>
+  </section>
+
+  <section class="card" id="affirmationCard">
+    <div class="card-number" id="cardNumber"></div>
+    <div class="card-category" id="cardCategory"></div>
+    <p class="card-text" id="cardText"></p>
+    <button class="favorite" id="favoriteBtn" title="Save to favorites">♡</button>
+  </section>
+
+  <div class="progress-row">
+    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="progress-label" id="progressLabel"></div>
+  </div>
+
+  <div class="status" id="autoStatus"><span class="pulse"></span> Auto-Playing</div>
+  <div class="repeat-banner" id="repeatBanner">
+    <strong>🎤 YOUR TURN — repeat it out loud</strong>
+    <div class="countdown" id="repeatCountdown">5</div>
+  </div>
+
+  <div class="controls">
+    <button class="btn icon" id="prevBtn">◀</button>
+    <button class="btn primary" id="shuffleBtn">✨ Shuffle</button>
+    <button class="btn icon" id="nextBtn">▶</button>
+  </div>
+  <div class="controls">
+    <button class="btn" id="autoBtn">▶ Auto-Play</button>
+    <button class="btn" id="readBtn">🔊 Read</button>
+    <button class="btn" id="repeatBtn">🎤 Repeat After Me</button>
+    <button class="btn" id="favoritesBtn">💕 Favorites <span id="favCount">0</span></button>
+  </div>
+
+  <section class="section">
+    <div class="section-title">Daily Session</div>
+    <div class="grid2">
+      <div class="field"><label>Focus</label><select id="sessionCategory"></select></div>
+      <div class="field"><label>Length</label>
+        <select id="sessionLength"><option value="5">5 affirmations</option><option value="10">10 affirmations</option><option value="15">15 affirmations</option></select>
+      </div>
+    </div>
+    <div class="session-actions">
+      <button class="btn primary" id="startSessionBtn">▶ Start Session</button>
+      <button class="btn" id="endSessionBtn" style="display:none">✕ End Session</button>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><strong id="streakCount">0</strong><span>Day Streak</span></div>
+    <div class="stat"><strong id="favoriteStat">0</strong><span>Favorites</span></div>
+    <div class="stat"><strong id="customStat">0</strong><span>My Affirmations</span></div>
+  </div>
+
+  <section class="section" id="favoritesSection" style="display:none">
+    <button class="panel-toggle" id="favoritesToggle"><span>💕 Favorite Affirmations</span><span>⌄</span></button>
+    <div class="panel-body open" id="favoritesBody"><div class="favorite-list" id="favoritesList"></div></div>
+  </section>
+
+  <section class="section">
+    <button class="panel-toggle" data-panel="customBody"><span>✍️ My Affirmations</span><span>⌄</span></button>
+    <div class="panel-body" id="customBody">
+      <div class="custom-form">
+        <input id="customText" placeholder="Write your own affirmation...">
+        <select id="customCategory"></select>
+        <button class="btn primary" id="saveCustomBtn">+ Add</button>
+      </div>
+      <div class="custom-list" id="customList"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <button class="panel-toggle" data-panel="journalBody"><span>📓 Reflection Journal</span><span>⌄</span></button>
+    <div class="panel-body" id="journalBody">
+      <p class="journal-prompt" id="journalPrompt"></p>
+      <textarea id="journalText" rows="5" placeholder="Write whatever comes up for you..."></textarea>
+      <div class="session-actions">
+        <button class="btn primary" id="saveJournalBtn">Save Reflection</button>
+        <button class="btn" id="newPromptBtn">New Prompt</button>
+      </div>
+      <div class="journal-list" id="journalList" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <div class="footer-note">Affirm &amp; Become • Your words. Your growth. Your next chapter. ❤️</div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+
+</body>
+</html>
