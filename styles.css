@@ -1,0 +1,670 @@
+/* ==========================================================================
+   1. Root Variables & Resets
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg: #090909;
+  --card: #171717;
+  --card2: #111111;
+  --rose: #e7a3b3;
+  --rose2: #ffd1dc;
+  --rose3: #b9657c;
+  --text: #f5f2f3;
+  --muted: #aaa1a5;
+  --border: #2b2427;
+
+  /* Decorative & Fonts */
+  --shadow: 0 0 35px rgba(231, 163, 179, 0.13);
+  --display: Georgia, "Times New Roman", serif;
+  --body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(231, 163, 179, 0.08), transparent 55%),
+    radial-gradient(ellipse at 90% 80%, rgba(185, 101, 124, 0.05), transparent 45%);
+  color: var(--text);
+  font-family: var(--body);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #111111;
+  color: var(--text);
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--rose3);
+  box-shadow: 0 0 0 3px rgba(231, 163, 179, 0.07);
+}
+
+
+/* ==========================================================================
+   2. Layout & Containers
+   ========================================================================== */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.section {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(23, 23, 23, 0.76);
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  margin-bottom: 12px;
+  color: var(--rose);
+  font-size: 0.74rem;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   3. Splash Screen
+   ========================================================================== */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: radial-gradient(ellipse at 50% 30%, #211317 0%, #0d090a 55%, #030202 100%);
+  cursor: pointer;
+  transition: opacity 0.8s, visibility 0.8s;
+}
+
+.splash.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-heart,
+.app-icon {
+  font-size: 58px;
+  filter: drop-shadow(0 8px 30px rgba(231, 163, 179, 0.42));
+  animation: float 3.2s ease-in-out infinite;
+}
+
+.splash h1,
+.app-title {
+  background: linear-gradient(180deg, #ffe9ee, var(--rose), #b9657c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: var(--display);
+  text-align: center;
+}
+
+.splash h1 {
+  font-size: 2.8rem;
+  letter-spacing: 2px;
+}
+
+.splash-sub,
+.app-subtitle {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.splash-preview {
+  width: 90%;
+  max-width: 510px;
+  padding: 28px;
+  border: 1px solid #442d34;
+  border-radius: 20px;
+  background: #151012;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+.splash-preview p {
+  color: #f0d8de;
+  font-family: var(--display);
+  font-size: 1.2rem;
+  line-height: 1.65;
+}
+
+.splash-tap {
+  color: #b88996;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.app-title {
+  font-size: 2rem;
+  letter-spacing: 1.5px;
+}
+
+
+/* ==========================================================================
+   4. Main Components (Card, Categories, Controls)
+   ========================================================================== */
+
+/* Category Strip */
+.category-strip {
+  display: flex;
+  gap: 8px;
+  padding: 4px 1px 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.chip {
+  padding: 9px 13px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #121212;
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+}
+
+.chip:hover,
+.chip.active {
+  border-color: var(--rose3);
+  background: rgba(231, 163, 179, 0.09);
+  color: #ffffff;
+}
+
+/* Card Component */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 300px;
+  padding: 46px 34px 38px;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  background: linear-gradient(180deg, #191719, #141314);
+  box-shadow: 0 10px 45px rgba(0, 0, 0, 0.5), var(--shadow);
+  text-align: center;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rose), transparent);
+}
+
+.card-number {
+  position: absolute;
+  top: 18px;
+  color: var(--rose3);
+  font-size: 0.67rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.card-category {
+  margin-bottom: 16px;
+  color: var(--rose);
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+
+.card-text {
+  max-width: 590px;
+  font-family: var(--display);
+  font-size: 1.42rem;
+  line-height: 1.7;
+  transition: opacity 0.2s;
+}
+
+.favorite {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  border: 0;
+  background: transparent;
+  color: #71666a;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.favorite.on {
+  color: #ff98b4;
+  filter: drop-shadow(0 0 9px rgba(255, 152, 180, 0.55));
+}
+
+/* Progress Tracking */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.progress-track {
+  flex: 1;
+  height: 5px;
+  border-radius: 99px;
+  background: #252124;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose3), var(--rose));
+  transition: width 0.3s;
+}
+
+.progress-label {
+  min-width: 66px;
+  color: var(--muted);
+  font-size: 0.73rem;
+  text-align: right;
+}
+
+/* Controls & Buttons */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+}
+
+.btn {
+  padding: 11px 17px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #171517;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+  border-color: var(--rose3);
+  box-shadow: 0 0 18px rgba(231, 163, 179, 0.12);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn.primary {
+  border: none;
+  background: linear-gradient(135deg, #b9657c, #e7a3b3, #b9657c);
+  color: #160b0f;
+  font-weight: 700;
+}
+
+.btn.icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+}
+
+.btn.active {
+  border-color: var(--rose);
+  color: var(--rose2);
+}
+
+
+/* ==========================================================================
+   5. Interactive Elements & Widgets
+   ========================================================================== */
+
+.status {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  color: var(--rose);
+  font-size: 0.72rem;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+}
+
+.status.show {
+  display: flex;
+}
+
+.pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rose);
+  box-shadow: 0 0 10px var(--rose);
+}
+
+.session-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.stat {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #111111;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  color: var(--rose2);
+  font-size: 1.25rem;
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.panel-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.panel-body {
+  display: none;
+  margin-top: 14px;
+}
+
+.panel-body.open {
+  display: block;
+}
+
+/* Lists & Items */
+.favorite-list,
+.custom-list,
+.journal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #111111;
+}
+
+.list-item .grow {
+  flex: 1;
+}
+
+.list-item p {
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.list-item small {
+  color: var(--muted);
+}
+
+.mini-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.mini {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #1a1718;
+  color: #dddddd;
+  cursor: pointer;
+}
+
+.empty {
+  padding: 10px;
+  color: #666666;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.custom-form {
+  display: grid;
+  grid-template-columns: 1fr 180px auto;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.journal-prompt {
+  margin-bottom: 10px;
+  color: #f2d9df;
+  font-family: var(--display);
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+
+/* Banners, Toasts, and Notes */
+.repeat-banner {
+  display: none;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #5b3440;
+  border-radius: 14px;
+  background: rgba(231, 163, 179, 0.08);
+  text-align: center;
+}
+
+.repeat-banner.show {
+  display: block;
+}
+
+.repeat-banner strong {
+  color: var(--rose2);
+}
+
+.countdown {
+  margin-top: 5px;
+  color: var(--rose);
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 1500;
+  width: max-content;
+  max-width: 90%;
+  padding: 10px 18px;
+  border: 1px solid var(--rose3);
+  border-radius: 999px;
+  background: #24191d;
+  color: var(--rose2);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.footer-note {
+  padding-bottom: 10px;
+  color: #6f6669;
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   6. Animations
+   ========================================================================== */
+
+@keyframes float {
+  50% {
+    transform: translateY(-12px) scale(1.04);
+  }
+}
+
+.sparkle {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  animation: sparkle 2.1s ease-out forwards;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-110px) scale(1.25);
+  }
+}
+
+
+/* ==========================================================================
+   7. Responsive Design
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  body {
+    padding: 13px;
+  }
+
+  .app {
+    gap: 15px;
+  }
+
+  .app-title {
+    font-size: 1.65rem;
+  }
+
+  .card {
+    min-height: 270px;
+    padding: 42px 21px 34px;
+  }
+
+  .card-text {
+    font-size: 1.2rem;
+  }
+
+  .grid2,
+  .stats,
+  .custom-form {
+    grid-template-columns: 1fr;
+  }
+}
